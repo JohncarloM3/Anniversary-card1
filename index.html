@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>7th Anniversary Greeting</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      padding: 5vw;
+      max-width: 90vw;
+      max-height: 80vh;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      box-sizing: border-box;
+    }
+    .flowers {
+      font-size: 10vw;
+      animation: rotate 6s linear infinite;
+    }
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .hidden-message {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      pointer-events: none;
+      background: #fff;
+      z-index: 10;
+    }
+    .hidden-message.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .hidden-message .card {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); /* ✅ fixed centering */
+      padding: 8vw;
+      max-width: 95vw;
+      max-height: 85vh;
+      font-size: 5vw;
+      font-weight: bold;
+      color: #000000;
+      border-radius: 20px;
+      /* ✅ Flower background image */
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/47/Pink_rose_flower.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+    .signature {
+      margin-top: 5vh;
+      font-size: 4vw;
+      font-style: italic;
+      color: #333; /* softer black for signature */
+    }
+    .blossom {
+      position: absolute;
+      top: -50px;
+      font-size: 5vw;
+      animation: fallBlossom linear infinite;
+      color: #e91e63;
+    }
+    @keyframes fallBlossom {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+      50% { transform: translateY(50vh) translateX(30px) rotate(180deg); opacity: 0.8; }
+      100% { transform: translateY(100vh) translateX(-30px) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- First page card -->
+  <div class="card" onclick="revealMessage()">
+    <div class="flowers">🌸</div>
+    <h1 style="font-size:5vw;">Happy 7th Anniversary, Jane!</h1>
+    <p style="font-size:4vw;">Tap to reveal your surprise message…</p>
+  </div>
+
+  <!-- Hidden message card -->
+  <div id="message" class="hidden-message" onclick="hideMessage()">
+    <div class="card">
+      Celebrating 7 wonderful years 🌸  
+      Thank you, Jane, for filling my life with love and laughter.  
+      Happy 7th Anniversary!
+      <div class="signature">From: JC</div>
+    </div>
+  </div>
+
+  <!-- Falling cherry blossoms -->
+  <div id="blossoms"></div>
+
+  <script>
+    function revealMessage() {
+      document.getElementById("message").classList.add("show");
+    }
+    function hideMessage() {
+      document.getElementById("message").classList.remove("show");
+    }
+
+    // Generate falling blossoms with wind effect
+    function createBlossom() {
+      const blossom = document.createElement("div");
+      blossom.classList.add("blossom");
+      blossom.innerHTML = "🌸"; 
+      blossom.style.left = Math.random() * window.innerWidth + "px";
+      blossom.style.animationDuration = (6 + Math.random() * 4) + "s";
+      document.getElementById("blossoms").appendChild(blossom);
+
+      setTimeout(() => {
+        blossom.remove();
+      }, 10000);
+    }
+
+    setInterval(createBlossom, 800);
+  </script>
+</body>
+</html>
